@@ -38,6 +38,7 @@ public class PowerUp : MonoBehaviour
         if(other.tag == "Player")
         {
             Debug.Log("Player collected PowerUp!");
+            GameObject.Find("Audio_Manager").GetComponent<AudioManager>().playPowerupSound();
             Player player = other.gameObject.GetComponent<Player>();
             if (player != null)
             {

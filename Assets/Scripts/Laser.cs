@@ -7,8 +7,11 @@ public class Laser : MonoBehaviour
     [SerializeField]
     private float _speed = 8.0f;
 
+    void Start()
+    {
+        GameObject.Find("Audio_Manager").GetComponent<AudioManager>().playLaserShotSound();
 
-
+    }
     // Update is called once per frame
     void Update()
     {

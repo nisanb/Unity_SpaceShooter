@@ -9,7 +9,9 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField]
     private float _speed = 100f;
-
+    [SerializeField]
+    GameObject _engineRight, _engineLeft;
+    
     [SerializeField]
     private int _speedMultiplier = 1;
 
@@ -132,6 +134,14 @@ public class Player : MonoBehaviour
         }
         
         _lives--;
+        if(_lives == 2)
+        {
+            _engineRight.SetActive(true);
+        } else if(_lives == 1)
+        {
+            _engineLeft.SetActive(true);
+        }
+
         _uiManager.updateLives(_lives);
         if (_lives < 1)
         {

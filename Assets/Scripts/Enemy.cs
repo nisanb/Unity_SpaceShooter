@@ -10,16 +10,28 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _speed = 4.0f;
 
+    Animator m_Animator;
+
     private Player _player;
     // Update is called once per frame
     void Create()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
+        if(_player == null)
+        {
+            Debug.LogError("Player is null!");
+        }
+
+        m_Animator = GetComponent<Animator>();
+        if (m_Animator == null)
+        {
+            Debug.LogError("Animator is null!");
+        }
     }
     void Update()
     {
         //move down at 4 meters per second
-        
+
         if (transform.position.y <= -3f)
         {
             transform.position = new Vector3(Random.Range(-8f, 8f), 12, 0);
@@ -34,12 +46,24 @@ public class Enemy : MonoBehaviour
         return Random.Range(min, max);
 
     }
-
+    private void destroy()
+    {
+        GameObject.Find("Audio_Manager").GetComponent<AudioManager>().playExplosionSound();
+        this.m_Animator.SetTrigger("OnEnemyDeath");
+        this.GetComponent<BoxCollider2D>().enabled = false;
+        Destroy(this.gameObject, 2.8f);
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         // if other is player
         string tag = other.tag;
-        
+
+        m_Animator = GetComponent<Animator>();
+        if (m_Animator == null)
+        {
+            Debug.LogError("Animator is null!");
+        }
+
         if (other.tag == "Player")
         {
             Player player = other.GetComponent<Player>();
@@ -47,11 +71,13 @@ public class Enemy : MonoBehaviour
             {
                 player.damage();
             }
-            Destroy(this.gameObject);
 
+
+            destroy();
         }
         else if (other.tag == "Laser")
         {
+           
 
             Debug.Log("Laser hit! Destroying laser..");
             Laser laser = other.GetComponent<Laser>();
@@ -65,7 +91,8 @@ public class Enemy : MonoBehaviour
             {
                 _player.addKill(10);
             }
-            Destroy(this.gameObject);
+            destroy();
+
         }
 
         

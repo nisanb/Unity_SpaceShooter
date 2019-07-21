@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     private void restartScene()
     {
-        SceneManager.LoadScene(0); // Current game scene
+        SceneManager.LoadScene(1); // Current game scene
     }
     public void GameOver()
     {

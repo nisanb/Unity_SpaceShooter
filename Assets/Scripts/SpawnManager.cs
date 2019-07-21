@@ -24,6 +24,11 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         Debug.Log("Started SpawnManager");
+        
+    }
+
+    public void startSpawning()
+    {
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
     }
@@ -36,6 +41,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerupRoutine()
     {
+        yield return new WaitForSeconds(2f);
         // every 3-7 seconds, spawn in a powerup
         GameObject[] PowerUps = { _tripleShotPUPrefab, _speedPUPrefab, _shieldPUPrefab}; //_shieldPUPrefab};
 
@@ -59,6 +65,7 @@ public class SpawnManager : MonoBehaviour
     // while loop
     IEnumerator SpawnEnemyRoutine()
     {
+        yield return new WaitForSeconds(2f);
         while (!_stopSpawning)
         {
             Debug.Log("Spawning enemy");
